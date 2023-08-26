@@ -2,8 +2,8 @@
 
 namespace Hasnayeen\Mdb\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use Hasnayeen\Mdb\MdbServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

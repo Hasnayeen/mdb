@@ -15,5 +15,5 @@ return [
 
     'extensions' => [
         // 'League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension',
-    ]
+    ],
 ];

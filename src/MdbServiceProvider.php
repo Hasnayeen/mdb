@@ -20,6 +20,7 @@ class MdbServiceProvider extends ServiceProvider
             __DIR__.'/../config/mdb.php', 'mdb'
         );
     }
+
     public function boot(): void
     {
         Str::macro('mdb', function (string $string, array $config = []): string {

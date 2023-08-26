@@ -1,9 +1,8 @@
 <?php
 
 use Hasnayeen\Mdb\Mdb;
-use Illuminate\View\Component;
-use Illuminate\Support\Facades\Blade;
 use Hasnayeen\Mdb\Tests\TestComponent;
+use Illuminate\Support\Facades\Blade;
 
 it('will render markdown', function () {
     $content = '# Hello World';
