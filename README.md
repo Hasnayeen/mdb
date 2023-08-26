@@ -1,9 +1,9 @@
 # MDX for laravel blade 
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/hasnayeen/mdb.svg?style=flat-square)](https://packagist.org/packages/hasnayeen/mdb)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/hasnayeen/mdb/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/hasnayeen/mdb/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/hasnayeen/mdb/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/hasnayeen/mdb/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/hasnayeen/mdb.svg?style=flat-square)](https://packagist.org/packages/hasnayeen/mdb)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/hasnayeen/mdb.svg)](https://packagist.org/packages/hasnayeen/mdb)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/hasnayeen/mdb/run-tests.yml?branch=main&label=tests)](https://github.com/hasnayeen/mdb/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/hasnayeen/mdb/fix-php-code-style-issues.yml?branch=main&label=code%20style)](https://github.com/hasnayeen/mdb/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/hasnayeen/mdb.svg)](https://packagist.org/packages/hasnayeen/mdb)
 
 This package allows you to use blade components in your markdown. If you're familiar with MDX format than this is same as MDX but with Laravel blade components.
 
@@ -61,7 +61,7 @@ Alternatively you can use `mdb` method on `Illuminate\Support\Str` class
 Str::mdb($content);
 ```
 
-You can also configure the  by passing an array of options to the `render` method. Check [League\CommonMark docs](https://commonmark.thephpleague.com/2.4/configuration/) for available options.
+You can also configure the underlying markdown converter by passing an array of options to the `render` method. Check [League\CommonMark docs](https://commonmark.thephpleague.com/2.4/configuration/) for available options.
 
 ```php
 $content = '# MDB Demo';
