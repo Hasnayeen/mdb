@@ -1,73 +1,113 @@
-# :package_description
+# MDX for laravel blade 
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/hasnayeen/mdb.svg?style=flat-square)](https://packagist.org/packages/hasnayeen/mdb)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/hasnayeen/mdb/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/hasnayeen/mdb/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/hasnayeen/mdb/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/hasnayeen/mdb/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/hasnayeen/mdb.svg?style=flat-square)](https://packagist.org/packages/hasnayeen/mdb)
 
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This package allows you to use blade components in your markdown. If you're familiar with MDX format than this is same as MDX but with Laravel blade components.
 
-## Support us
+## Hire me
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+I'm available for contractual work on this stack (Filament, Laravel, Livewire, AlpineJS, TailwindCSS). Reach me via [email](searching.nehal@gmail.com) or [discord](discordapp.com/users/297318343642447872)
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
+composer require hasnayeen/mdb
 ```
 
 ## Usage
 
-```php
-$variable = new VendorName\Skeleton();
-echo $variable->echoPhrase('Hello, VendorName!');
+Let's say you've a blade component like below
+
+```html
+<!-- resources/views/components/alert.blade.php -->
+
+@props(['type' => 'info'])
+
+<div {{ $attributes->merge(['class' => "alert alert-{{ $type }}"]) }}>
+    {{ $slot }}
+</div>
 ```
 
+Use the component in your markdown component and convert to html with `render` method
+
+```php
+$content = '
+# Welcome to my blog
+
+<x-alert type="success">
+This is a success message.
+</x-alert>
+
+<x-alert type="warning">
+This is a warning message.
+</x-alert>
+
+<x-alert type="danger">
+This is a danger message.
+</x-alert>
+';
+
+Mdb::render($content);
+```
+
+Alternatively you can use `mdb` method on `Illuminate\Support\Str` class
+
+```php
+Str::mdb($content);
+```
+
+You can also configure the  by passing an array of options to the `render` method. Check [League\CommonMark docs](https://commonmark.thephpleague.com/2.4/configuration/) for available options.
+
+```php
+$content = '# MDB Demo';
+$config = [
+    'html_input' => 'allow',
+    'allow_unsafe_links' => true,
+    'max_nesting_level' => 4,
+    'renderer' => 'block_separator',
+];
+Mdb::render($content, $config);
+```
+
+You can use additional [extension](https://commonmark.thephpleague.com/2.4/extensions/overview/) to use for markdown rendering by adding them to mdb config file.
+
+```php
+    'extensions' => [
+        'League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension',
+    ]
+```
+
+This will add the [Heading Permalink](https://commonmark.thephpleague.com/2.4/extensions/heading-permalinks/) extension to turn all heading into permalink.
+
+You can provide configuration for the extension by passing array to `render` method like before
+
+```php
+$content = '# MDB Demo';
+$config = [
+    'heading_permalink' => [
+        'html_class' => 'heading-permalink',
+        'id_prefix' => 'content',
+        'apply_id_to_heading' => false,
+        'heading_class' => '',
+        'fragment_prefix' => 'content',
+        'insert' => 'before',
+        'min_heading_level' => 1,
+        'max_heading_level' => 6,
+        'title' => 'Permalink',
+        'symbol' => '#',
+        'aria_hidden' => true,
+    ],
+];
+Mdb::render($content, $config);
+```
 ## Testing
 
-```bash
+```
 composer test
 ```
 
@@ -85,7 +125,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Hasnayeen](https://github.com/Hasnayeen)
 - [All Contributors](../../contributors)
 
 ## License
